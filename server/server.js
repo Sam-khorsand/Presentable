@@ -14,8 +14,6 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.log(err));
 
-app.get("/", (req, res) => res.send("Welcome to Sensor Data Monitoring Service"));
-
 app.use(bodyParser.json());
 app.use("/records", records);
 
@@ -23,6 +21,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static('../client/build'));
 
   app.get('*', (req, res) => {
+    console.log("APP GET");
     res.sendFile(path.resolve(__dirname, '../client', 'build', 'index.html'));
   });
 }
