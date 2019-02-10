@@ -33,7 +33,6 @@ module.exports = {
     });
   },
   login: function(cb) {
-    console.log("cb", cb);
     var othis = this
     axios.post('https://opendata.hopefully.works/api/login', loginCred, {
       headers: {
@@ -49,48 +48,9 @@ module.exports = {
     });
   },
   apiCall: function() {
-    console.log("accessToken", this.token);
     axios.get('https://opendata.hopefully.works/api/events', { headers: { "Authorization": `Bearer ${this.token}` } })
         .then(res => {
-          console.log("res", res.data);
           saveRecord(res.data);
     });
   },
 }
-
-
-    /*axios.post('https://opendata.hopefully.works/api/signup', login_cred, {
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    }).then(res =>
-      console.log("res", res)
-    )
-
-    axios.post('https://opendata.hopefully.works/api/login', login_cred, {
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    }).then(res => {
-      console.log("res", res)
-      axios.get('https://opendata.hopefully.works/api/events', { headers: { "Authorization": `Bearer ${res.data.accessToken}` } })
-        .then(res => {
-          console.log("res", res)
-          console.log("res type", typeof (res.data.sensor1))
-          axios.post('/records', res.data, {
-            headers: {
-              'Content-Type': 'application/json',
-            }
-          }).then(res => {
-            console.log("server res", res)
-            othis.setState({
-              date: res.data.date,
-              sesonr1: res.data.sensor1,
-              sensor2: res.data.sensor2,
-              sensor3: res.data.sensor3,
-              sensor4: res.data.sensor4,
-            })
-          })
-        })
-    })
-  }*/

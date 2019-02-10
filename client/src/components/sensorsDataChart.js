@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Chart } from "react-google-charts";
 
-function sensorTable(props) {
+function sensorsDataChart(props) {
     return (
       <Chart 
         width='100%'
@@ -18,4 +18,4 @@ function sensorTable(props) {
     )
 };
 
-export default sensorTable;
+export default sensorsDataChart;
