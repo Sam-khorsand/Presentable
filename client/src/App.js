@@ -24,7 +24,8 @@ class App extends Component {
   }
 
   render() {
-    let chart = (helper.dataAvailable) ? <SensorsChart data={this.state.chartData}/> : chart = <div>No data available!</div>    
+    let chart
+    chart = (helper.dataAvailable) ? <SensorsChart data={this.state.chartData}/> : chart = <div>No data available!</div>    
     return (
       <div className="App">
         <PickDate
