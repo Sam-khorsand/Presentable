@@ -1,9 +1,8 @@
 # Presentable
-Challenge
-
+Data Visualization App
 App is deployed to [heroku](https://fast-brook-52751.herokuapp.com/)
 
-# Installation guide:
+# Installation guide
 
 cd /server
 npm install
