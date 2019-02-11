@@ -14,6 +14,10 @@ class App extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  componentDidMount() {
+    this.handleChange(new Date());
+  }
+
   handleChange(selectedDate) {
     this.setState({
       selectedDate: selectedDate
@@ -25,13 +29,19 @@ class App extends Component {
 
   render() {
     let chart
-    chart = (helper.dataAvailable) ? <SensorsChart data={this.state.chartData}/> : chart = <div>No data available!</div>    
+    chart = (helper.dataAvailable) ? <SensorsChart data={this.state.chartData}/> : chart = <div className="no-data">No data available!</div>    
     return (
       <div className="App">
-        <PickDate
-          date={this.state.selectedDate}
-          handleChange={newDate => this.handleChange(newDate)}
-        />
+        <div className="App-header">
+          <h1>Welcome to Sensor Data Monitoring Service!</h1>
+        </div>
+        <div className="date-picker">
+          <h5>Please select a date to monitor hourly collections:</h5>
+          <PickDate
+            date={this.state.selectedDate}
+            handleChange={newDate => this.handleChange(newDate)}
+          />
+        </div>
         {chart}
       </div>
     );

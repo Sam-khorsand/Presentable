@@ -9,7 +9,7 @@ function sensorsDataChart(props) {
         chartType ='ComboChart'
         data = {props.data}
         options = {{
-          title : 'Collected sensor data',
+          title : 'Collected Data',
           vAxis: {title: 'Measurements'},
           hAxis: {title: 'Hours'},
           seriesType: 'bars'
