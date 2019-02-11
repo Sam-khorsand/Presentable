@@ -29,7 +29,7 @@ class App extends Component {
 
   render() {
     let chart
-    chart = (helper.dataAvailable) ? <SensorsChart data={this.state.chartData}/> : chart = <div className="no-data">No data available!</div>    
+    chart = (helper.dataAvailable) ? <SensorsChart data={this.state.chartData}/> : chart = <div className="no-data"><h5>No data available!</h5></div>    
     return (
       <div className="App">
         <div className="App-header">
