@@ -16,6 +16,7 @@ npm install
 // Run the app
 
 From root directory:
+
 npm run dev
 
 # Docker deployment

@@ -2,7 +2,7 @@ const axios = require('axios');
 
 module.exports = {
   dataAvailable: false,
-  queryRec: function(selectedDate, cb) {
+  queryRec: (selectedDate, cb) => {
     axios.get('/records', {
         params: {
           date: selectedDate
