@@ -1,15 +1,9 @@
 const axios = require('axios');
 const Record = require("../models/Record");
 
-var timeZoneDiff = function (date) {
-  var givenDate = new Date(date)
-  var offset = givenDate.getTimezoneOffset() * 60000 // This converts the given minutes to milliseconds.
-  return new Date(givenDate.getTime() - offset);
-}
-
-var saveRecord = function(data){
+var saveRecord = function (data) {
   const newRec = new Record({
-    date: timeZoneDiff(data.date),
+    date: data.date,
     sensor1: data.sensor1,
     sensor2: data.sensor2,
     sensor3: data.sensor3,
@@ -25,7 +19,7 @@ let loginCred = {
 
 module.exports = {
   token: null,
-  signup: function(cb) {
+  signup: function (cb) {
     axios.post('https://opendata.hopefully.works/api/signup', loginCred, {
       headers: {
         'Content-Type': 'application/json',
@@ -38,7 +32,7 @@ module.exports = {
       console.log('signup error ' + error);
     });
   },
-  login: function(cb) {
+  login: function (cb) {
     var othis = this
     axios.post('https://opendata.hopefully.works/api/login', loginCred, {
       headers: {
@@ -53,10 +47,10 @@ module.exports = {
       othis.signup(cb);
     });
   },
-  apiCall: function() {
+  apiCall: function () {
     axios.get('https://opendata.hopefully.works/api/events', { headers: { "Authorization": `Bearer ${this.token}` } })
-        .then(res => {
-          saveRecord(res.data);
-    });
+      .then(res => {
+        saveRecord(res.data);
+      });
   },
 }
