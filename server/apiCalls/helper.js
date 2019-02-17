@@ -1,7 +1,7 @@
 const axios = require('axios');
 const Record = require("../models/Record");
 
-var saveRecord = function (data) {
+var saveRecord = function(data){
   const newRec = new Record({
     date: data.date,
     sensor1: data.sensor1,

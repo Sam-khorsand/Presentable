@@ -1,13 +1,17 @@
 const helpers = require('./helper');
-const timeLapse = 3600000;
+const timeLapse = 10000; //1 hour
 
-if(!helpers.token)
+if(!helpers.token) {
+    console.log("Token not avaiable");
     helpers.login(requestLoop);
-else
+}
+else {
+    console.log("Token avaiable");
     requestLoop();
-
+}
 function requestLoop() {
-    helpers.apiCall();
-    setTimeout(requestLoop, timeLapse);
+    setInterval(function () { 
+        helpers.apiCall(); 
+    }, timeLapse);
 }
 

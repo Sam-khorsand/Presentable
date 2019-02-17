@@ -1,7 +1,6 @@
 const axios = require('axios');
 
 module.exports = {
-  dataAvailable: false,
   queryRec: function (selectedDate, cb) {
     axios.get('/records', {
       params: {
@@ -17,7 +16,6 @@ module.exports = {
             hourlyRecs.push((key === 'date') ? '' + new Date(rec[key]).getHours() : rec[key])
           dailyRecs.push(hourlyRecs)
         });
-        (dailyRecs.length > 1) ? this.dataAvailable = true : this.dataAvailable = false;
         cb(dailyRecs);
       })
   },
