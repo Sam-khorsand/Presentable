@@ -1,4 +1,5 @@
 const helpers = require('./helper');
+const keepAlive = require('./keepAlive');
 const timeLapse = 10000; //1 hour
 
 if(!helpers.token) {
