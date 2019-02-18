@@ -1,6 +1,8 @@
 const axios = require('axios');
 const Record = require("../models/Record");
 
+const timeLapse = 3600000; // 1 hour
+
 var saveRecord = function(data){
   const newRec = new Record({
     date: data.date,
@@ -12,45 +14,30 @@ var saveRecord = function(data){
   newRec.save();
 }
 
-let loginCred = {
-  password: "1q2w3e4r",
-  email: "questtosignup@gmail.com"
-}
-
 module.exports = {
-  token: null,
-  signup: function (cb) {
-    axios.post('https://opendata.hopefully.works/api/signup', loginCred, {
+  signup: function (newUser, cb) {
+    axios.post('https://opendata.hopefully.works/api/signup', 
+      {
+        email: newUser.email,
+        password: newUser.password
+      }, {
       headers: {
         'Content-Type': 'application/json',
       }
     }).then(res => {
       console.log('singup sucess!');
-      this.token = res.data.accessToken;
-      cb();
+      this.apiCall(res.data.accessToken);
+      cb(res.data.accessToken);
     }).catch(error => {
       console.log('signup error ' + error);
     });
   },
-  login: function (cb) {
-    var othis = this
-    axios.post('https://opendata.hopefully.works/api/login', loginCred, {
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    }).then(res => {
-      console.log('login sucess!');
-      this.token = res.data.accessToken;
-      cb();
-    }).catch(error => {
-      console.log('login error ' + error);
-      othis.signup(cb);
-    });
-  },
-  apiCall: function () {
-    axios.get('https://opendata.hopefully.works/api/events', { headers: { "Authorization": `Bearer ${this.token}` } })
-      .then(res => {
-        saveRecord(res.data);
-      });
-  },
+  apiCall: function (accessToken) {
+      setInterval(function () {
+        axios.get('https://opendata.hopefully.works/api/events', { headers: { "Authorization": `Bearer ${accessToken}` } })
+          .then(res => {
+            saveRecord(res.data);
+          });
+      }, timeLapse);
+    }
 }
