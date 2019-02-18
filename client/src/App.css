@@ -59,6 +59,7 @@ footer {
 }
 
 .no-data {
-  margin: 10rem;
+  align-items: center;
+  margin: 15rem;
   color: red;
 }
