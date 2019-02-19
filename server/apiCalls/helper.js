@@ -3,7 +3,7 @@ const Record = require("../models/Record");
 
 const timeLapse = 3600000; // 1 hour
 
-var saveRecord = function(data){
+var saveRecord = function (data) {
   const newRec = new Record({
     date: data.date,
     sensor1: data.sensor1,
@@ -12,6 +12,18 @@ var saveRecord = function(data){
     sensor4: data.sensor4
   });
   newRec.save();
+}
+
+//Check if the record for the hour is already saved
+var checkDuplicacy = function (data) {
+  Record
+    .find()
+    .limit(1)
+    .sort({ $natural: -1 })
+    .then(res => {
+      if (new Date(res[0].date).getHours() !== new Date(data.date).getHours())
+        saveRecord(data)
+    });
 }
 
 module.exports = {
@@ -36,7 +48,7 @@ module.exports = {
       setInterval(function () {
         axios.get('https://opendata.hopefully.works/api/events', { headers: { "Authorization": `Bearer ${accessToken}` } })
           .then(res => {
-            saveRecord(res.data);
+            checkDuplicacy(res.data);
           });
       }, timeLapse);
     }

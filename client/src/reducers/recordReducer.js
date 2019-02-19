@@ -15,7 +15,7 @@ export default function(state = initialState, action) {
     case GET_RECORDS: 
       return {
         ...state,
-        dataAvailable: (action.payload.length == 0) ? false : true,
+        dataAvailable: (action.payload.length === 0) ? false : true,
         chartData: action.payload.reduce(
           (arr, recs) =>
             [...arr, ...[Object.keys(recs).map((i) =>
