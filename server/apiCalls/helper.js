@@ -52,7 +52,6 @@ module.exports = {
         checkDuplicacy(res.data);
       })
       .catch(err => console.log("error: " + err));
-    console.log("running check");
     setTimeout(function () { othis.apiCall(accessToken); }, timeLapse);
   }
 }
