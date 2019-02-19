@@ -21,8 +21,9 @@ var checkDuplicacy = function (data) {
     .limit(1)
     .sort({ $natural: -1 })
     .then(res => {
-      if (new Date(res[0].date).getHours() !== new Date(data.date).getHours())
-        saveRecord(data)
+      if (new Date(res[0].date).getHours() !== new Date(data.date).getHours()) {
+        saveRecord(data);
+      }
     });
 }
 
@@ -45,11 +46,13 @@ module.exports = {
     });
   },
   apiCall: function (accessToken) {
-      setInterval(function () {
-        axios.get('https://opendata.hopefully.works/api/events', { headers: { "Authorization": `Bearer ${accessToken}` } })
-          .then(res => {
-            checkDuplicacy(res.data);
-          });
-      }, timeLapse);
-    }
+    var othis = this;
+    axios.get('https://opendata.hopefully.works/api/events', { headers: { "Authorization": `Bearer ${accessToken}` } })
+      .then(res => {
+        checkDuplicacy(res.data);
+      })
+      .catch(err => console.log("error: " + err));
+    console.log("running check");
+    setTimeout(function () { othis.apiCall(accessToken); }, timeLapse);
+  }
 }

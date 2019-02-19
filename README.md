@@ -1,7 +1,7 @@
 # Presentable
 Data Visualization App
 
-App is deployed to [heroku](https://fast-brook-52751.herokuapp.com/)
+App retrieves sensor data from an API and diplays it on Google Charts, and is deployed to [heroku](https://fast-brook-52751.herokuapp.com/)
 
 # Installation guide
 

@@ -15,10 +15,6 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    date: {
-        type: Date,
-        required: true
-    },
     accessToken: {
         type: String,
         required: true
