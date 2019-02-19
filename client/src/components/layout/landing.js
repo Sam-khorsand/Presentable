@@ -23,10 +23,10 @@ class Landing extends Component {
                   Monitor Sensor Data Readings Live
                 </p>
                 <hr />
-                <Link to="/register" className="btn btn-lg btn-info mr-2">
+                <Link to="/register" className="btn btn-default btn-lg text-light">
                   Sign Up
                 </Link>
-                <Link to="/login" className="btn btn-lg btn-light">
+                <Link to="/login" className="btn btn-default btn-lg text-light">
                   Login
                 </Link>
               </div>
