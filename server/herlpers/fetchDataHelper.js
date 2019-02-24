@@ -1,7 +1,7 @@
 const axios = require('axios');
 const recordsHelper = require("./recordsHelper");
 
-const timeLapse = 36000; // 1 hour
+const timeLapse = 3600000; // 1 hour
 
 module.exports = {
     apiSignup() {
