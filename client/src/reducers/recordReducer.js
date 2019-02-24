@@ -11,7 +11,7 @@ const initialState = {
 
 export default function(state = initialState, action) {
   switch (action.type) {
-     // The payload needs to be coerced into a two-dementional arrat to be fed to google chart
+     // The payload needs to be coerced into a two-dementional array to be fed to google chart
     case GET_RECORDS: 
       return {
         ...state,

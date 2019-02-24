@@ -21,7 +21,6 @@ module.exports = Object.assign(Object.create(fetchDataHelper), {
             bcrypt.hash(data.password, salt, (err, hash) => {
                 if (err) throw err;
                 this.newUser.password = hash;
-                console.log("newUser", this.newUser);
                 this.getUserApiCallToken();
             });
         });

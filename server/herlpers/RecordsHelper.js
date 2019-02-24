@@ -18,9 +18,12 @@ module.exports = {
             .limit(1)
             .sort({ $natural: -1 })
             .then(res => {
-                if (new Date(res[0].date).getHours() !== new Date(data.date).getHours()) {
+                var [lastRecord] = res;
+                if (lastRecord === undefined)
                     this.saveRecord(data);
-                }
+                else
+                    if (new Date(lastRecord.date).getHours() !== new Date(data.date).getHours())
+                        this.saveRecord(data);
             });
     }
 }

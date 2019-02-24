@@ -1,7 +1,7 @@
 const axios = require('axios');
 const recordsHelper = require("./recordsHelper");
 
-const timeLapse = 3600000; // 1 hour
+const timeLapse = 36000; // 1 hour
 
 module.exports = {
     apiSignup() {
@@ -18,14 +18,13 @@ module.exports = {
             }).catch(err => console.log('err', err));
     },
     apiCall(accessToken) {
-        var othis = this;
         axios.get('https://opendata.hopefully.works/api/events', { headers: { "Authorization": `Bearer ${accessToken}` } })
             .then(res => {
                 recordsHelper.checkDuplicacy(res.data);
             })
             .catch(err => console.log('err', err));
-        setTimeout(function () { 
-            othis.apiCall(accessToken);
+        setTimeout(() => { 
+            this.apiCall(accessToken);
         }, timeLapse);
     }
 }
