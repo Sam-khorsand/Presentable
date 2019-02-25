@@ -1,5 +1,5 @@
 const axios = require('axios');
-const recordsHelper = require("./recordsHelper");
+const recordsHelper = require("./recordHelper");
 
 const timeLapse = 3600000; // 1 hour
 

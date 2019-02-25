@@ -6,7 +6,7 @@ const keys = require('../../config/keys');
 
 const validateRegisterInput = require('../../validation/register');
 const validateLoginInput = require('../../validation/login');
-const usersHelper = require("../../herlpers/usersHelper");
+const usersHelper = require("../../herlpers/userHelper");
 const serverResponse = require("../../herlpers/serverResponseHelper");
 const User = require('../../models/User');
 
