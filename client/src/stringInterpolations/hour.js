@@ -1,14 +1,12 @@
 
 export default function(strings, ...values) {
-    var str = "";
-    for(let i = 0; i < strings.length; i++) {
-        if (i > 0) {
-            if (values[i - 1] instanceof Date)
-                str += values[i - 1].getHours() + ':00';
-            else
-                str += values[i - 1];
-        }
-        str += strings[i];
-    }
-    return str;
+    return strings.map(function(curr, idx) {
+      if (values[idx - 1])
+        if (values[idx - 1] instanceof Date)
+          return values[idx - 1].getHours() + ':00' + curr;
+         else
+          return values[idx - 1] + curr;
+      else
+      	return curr;
+    }).join('');
 }
