@@ -1,30 +1,37 @@
 const axios = require('axios');
 const recordsHelper = require("./recordHelper");
-
 const timeLapse = 3600000; // 1 hour
 
-module.exports = {
-    apiSignup() {
-        axios.post('https://opendata.hopefully.works/api/signup',
-            this.newUser
-            , {
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            }).then(res => {
-                console.log('singup sucess!');
-                this.newUser.accessToken = res.data.accessToken;
-                this.saveUser();
-            }).catch(err => console.log('err', err));
+module.exports = Object.assign(Object.create(recordsHelper), {
+    apiSignup(newUser) {
+        return new Promise(function(resolve, reject) {
+            axios.post('https://opendata.hopefully.works/api/signup',
+                newUser
+                , {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                }).then(res => resolve(res.data.accessToken))
+                    // this.newUser.accessToken = res.data.accessToken;
+                    // this.saveUser();
+                .catch(err => reject(err));
+        })
+            
     },
     apiCall(accessToken) {
-        axios.get('https://opendata.hopefully.works/api/events', { headers: { "Authorization": `Bearer ${accessToken}` } })
-            .then(res => {
-                recordsHelper.checkDuplicacy(res.data);
-            })
-            .catch(err => console.log('err', err));
-        setTimeout(() => { 
-            this.apiCall(accessToken);
-        }, timeLapse);
+        return new Promise(function (resolve, reject) {
+            axios.get('https://opendata.hopefully.works/api/events', { headers: { "Authorization": `Bearer ${accessToken}` } })
+            .then(res => resolve(res.data))
+                //recordsHelper.checkDuplicacy(res.data);
+            .catch(err => reject('err', err));
+            
+        });
+    },
+    waitFetchInterval() {
+        return new Promise(function(resolve) {
+            setInterval(() => {
+                resolve();
+            }, timeLapse);
+        })
     }
-}
+})

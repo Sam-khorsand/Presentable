@@ -8,7 +8,7 @@ import PickDate from "./pickDate";
 class Dashboard extends Component {
 
     componentDidMount() {
-        this.handleChange(new Date());
+        this.handleChange(this.props.selectedDate);
     }
 
     handleChange = (selectedDate) => {
