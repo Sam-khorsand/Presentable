@@ -1,6 +1,7 @@
 import {
-  GET_RECORDS,
-  CHANGE_DATE,
+  UPDATE_RECORDS,
+  DATE_PICKER_CHANGE,
+  SLIDER_CHANGE,
 } from '../actions/types';
 import hour from '../stringInterpolations/hour';
 
@@ -13,7 +14,7 @@ const initialState = {
 export default function(state = initialState, action) {
   switch (action.type) {
      // The payload needs to be coerced into a two-dementional array to be fed to google chart
-    case GET_RECORDS:
+    case UPDATE_RECORDS:
       return {
         ...state,
         dataAvailable: (action.payload.length === 0) ? false : true,
@@ -23,10 +24,17 @@ export default function(state = initialState, action) {
         }, [['date', 'sensor1', 'sensor2', 'sensor3', 'sensor4']])
       }
 
-    case CHANGE_DATE: {
+    case DATE_PICKER_CHANGE: {
       return {
         ...state,
-        selectedDate: action.selectedDate
+        selectedDate: action.payload
+      }
+    }
+
+    case SLIDER_CHANGE: {
+      return {
+        ...state,
+        selectedDate: action.payload
       }
     }
     default:

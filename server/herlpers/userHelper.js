@@ -22,16 +22,13 @@ module.exports = Object.assign(Object.create(fetchDataHelper), {
             name: reqBody.name,
             email: reqBody.email
         });
-        //this.hashPassword(reqBody);
     },
     hashPassword(reqBody) {
         return new Promise(function(resolve, reject) {
             bcrypt.genSalt(10, (err, salt) => {
                 bcrypt.hash(reqBody.password, salt, (err, hash) => {
                     if (err) reject(err);
-                    //this.newUser.password = hash;
                     resolve(hash);
-                    //this.getUserApiCallToken();
                 });
             });
         });
@@ -42,12 +39,8 @@ module.exports = Object.assign(Object.create(fetchDataHelper), {
                 if (user) {
                     errors.email = 'Email already exists';
                     reject(errors);
-                    //return serverResponse.res400(errors);
                 } else
                     resolve(reqBody);
-                    //runGen(usersGen.register(reqBody));
-                    //usersHelper.createNewUSer(req.body);
-                
             });
         });
     },
@@ -58,7 +51,6 @@ module.exports = Object.assign(Object.create(fetchDataHelper), {
                 if (!user) {
                     errors.email = 'User not found';
                     reject(errors);
-                    //return serverResponse.res400(errors);
                 }
                 resolve(user);
             });
@@ -68,15 +60,11 @@ module.exports = Object.assign(Object.create(fetchDataHelper), {
         return new Promise(function (resolve, reject) {
             const password = reqBody.password;
             bcrypt.compare(password, user.password).then(isMatch => {
-                if (isMatch) {
+                if (isMatch)
                     resolve(user.accessToken);
-
-                    //usersHelper.apiCall(user.accessToken)
-
-                } else {
+                else {
                     errors.password = 'Password incorrect';
                     reject(errors);
-                    //return serverResponse.res400(errors);
                 }
             });
         });
@@ -101,17 +89,21 @@ module.exports = Object.assign(Object.create(fetchDataHelper), {
         });
     },
     checkRegisterValidity(reqBody) {
-        const { errors, isValid } = validateRegisterInput(reqBody);
-
-        if (!isValid) {
-            return serverResponse.res400(errors);
-        }
+        return new Promise(function (resolve, reject) {
+            const { errors, isValid } = validateRegisterInput(reqBody);
+            if (!isValid) {
+                reject(errors);
+            }
+            resolve();
+        });
     },
     checkLoginValidity(reqBody) {
-        const { errors, isValid } = validateLoginInput(reqBody);
-
-        if (!isValid) {
-            return serverResponse.res400(errors);
-        }
+        return new Promise(function (resolve, reject) {
+            const { errors, isValid } = validateLoginInput(reqBody);
+            if (!isValid) {
+                reject(errors);
+            }
+            resolve();
+        });
     }
 });

@@ -1,6 +1,6 @@
 const axios = require('axios');
 const recordsHelper = require("./recordHelper");
-const timeLapse = 3600000; // 1 hour
+const timeLapse = 60*60*1000; // 1 hour
 
 module.exports = Object.assign(Object.create(recordsHelper), {
     apiSignup(newUser) {
@@ -12,8 +12,6 @@ module.exports = Object.assign(Object.create(recordsHelper), {
                         'Content-Type': 'application/json',
                     }
                 }).then(res => resolve(res.data.accessToken))
-                    // this.newUser.accessToken = res.data.accessToken;
-                    // this.saveUser();
                 .catch(err => reject(err));
         })
             
@@ -22,9 +20,7 @@ module.exports = Object.assign(Object.create(recordsHelper), {
         return new Promise(function (resolve, reject) {
             axios.get('https://opendata.hopefully.works/api/events', { headers: { "Authorization": `Bearer ${accessToken}` } })
             .then(res => resolve(res.data))
-                //recordsHelper.checkDuplicacy(res.data);
             .catch(err => reject('err', err));
-            
         });
     },
     waitFetchInterval() {

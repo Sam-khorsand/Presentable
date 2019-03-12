@@ -1,5 +1,6 @@
 body {
   margin-bottom: 100px !important;
+  text-align: center;
 }
 
 img {
@@ -49,11 +50,14 @@ footer {
   width: 100%;
 }
 
-.date-picker {
+.dashboard-wrapper h2{
+  margin: 5rem;
+}
+
+.date-selection {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-items: center;
   justify-content: space-around;
   margin:2rem;
 }

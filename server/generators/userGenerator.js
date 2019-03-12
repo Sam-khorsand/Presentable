@@ -2,6 +2,7 @@ const userHelper = require("../herlpers/userHelper");
 const serverResponse = require("../herlpers/serverResponseHelper");
 
 module.exports = { 
+    
     registerReq: function* (userData) {
 
         try {
@@ -40,6 +41,7 @@ module.exports = {
             return serverResponse.res400(err);
         }
     },
+
     loginReq: function* (userData) {
 
         try {

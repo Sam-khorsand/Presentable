@@ -1,11 +1,23 @@
 import axios from 'axios';
 
 import {
-  GET_RECORDS,
-  CHANGE_DATE
+  UPDATE_RECORDS,
+  DATE_PICKER_CHANGE,
+  SLIDER_CHANGE,
+  STOP_RECORDS
 } from './types';
 
-export const changeDate = selectedDate => ({ type: CHANGE_DATE, selectedDate })
+export const datePickerChange = selectedDate => 
+  ({ 
+    type: DATE_PICKER_CHANGE, 
+    payload: selectedDate
+  })
+
+export const sliderChange = selectedDate =>
+  ({
+    type: SLIDER_CHANGE,
+    payload: selectedDate
+  });
 
 export const getRecords = selectedDate => dispatch => {
 
@@ -16,14 +28,25 @@ export const getRecords = selectedDate => dispatch => {
   })
   .then(res =>
     dispatch({
-      type: GET_RECORDS,
+      type: UPDATE_RECORDS,
       payload: res.data
     })
   )
   .catch(err =>
     dispatch({
-      type: GET_RECORDS,
+      type: UPDATE_RECORDS,
       payload: null
     })
   );
 };
+
+export const updateRecords = function (res) {
+  return {
+    type: UPDATE_RECORDS,
+    payload: res
+  }
+};
+
+export const stopRecords = () => ({
+  type: STOP_RECORDS
+});
