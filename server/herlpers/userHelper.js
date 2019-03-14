@@ -8,6 +8,7 @@ const User = require('../models/User');
 const validateRegisterInput = require('../validation/register');
 const validateLoginInput = require('../validation/login');
 
+
 module.exports = Object.assign(Object.create(fetchDataHelper), {
     saveUser(newUser) {
         return new Promise(function (resolve, reject) {
@@ -17,18 +18,16 @@ module.exports = Object.assign(Object.create(fetchDataHelper), {
             .catch(err => reject(err));
         })
     },
-    createNewUSer(reqBody) {
-        return Promise.resolve({
-            name: reqBody.name,
-            email: reqBody.email
-        });
-    },
-    hashPassword(reqBody) {
+    createNewUser(reqBody) {
         return new Promise(function(resolve, reject) {
             bcrypt.genSalt(10, (err, salt) => {
                 bcrypt.hash(reqBody.password, salt, (err, hash) => {
                     if (err) reject(err);
-                    resolve(hash);
+                    resolve({
+                            name: reqBody.name,
+                            email: reqBody.email,
+                            password: hash
+                        });
                 });
             });
         });
@@ -44,7 +43,7 @@ module.exports = Object.assign(Object.create(fetchDataHelper), {
             });
         });
     },
-    checkUserLogin(reqBody) {
+    checkUserCreds(reqBody) {
         return new Promise(function (resolve, reject) {
             const email = reqBody.email;
             User.findOne({ email }).then(user => {
@@ -52,20 +51,15 @@ module.exports = Object.assign(Object.create(fetchDataHelper), {
                     errors.email = 'User not found';
                     reject(errors);
                 }
-                resolve(user);
-            });
-        });
-    },
-    compareLoginPassword(user, reqBody) {
-        return new Promise(function (resolve, reject) {
-            const password = reqBody.password;
-            bcrypt.compare(password, user.password).then(isMatch => {
-                if (isMatch)
-                    resolve(user.accessToken);
-                else {
-                    errors.password = 'Password incorrect';
-                    reject(errors);
-                }
+                const password = reqBody.password;
+                bcrypt.compare(password, user.password).then(isMatch => {
+                    if (isMatch)
+                        resolve(user);
+                    else {
+                        errors.password = 'Password incorrect';
+                        reject(errors);
+                    }
+                });
             });
         });
     },
@@ -80,10 +74,14 @@ module.exports = Object.assign(Object.create(fetchDataHelper), {
                 function(err, token) {
                     if (err)
                         reject(err);
-                    resolve({
-                        success: true,
-                        token: 'Bearer ' + token
-                    })
+                    resolve(
+                        (function(token) {
+                            serverResponse.res200({
+                                success: true,
+                                token: 'Bearer ' + token
+                            });
+                            return user.accessToken;
+                        })(token))
                 }
             );
         });

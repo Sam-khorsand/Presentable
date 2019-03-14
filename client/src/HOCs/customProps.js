@@ -1,4 +1,4 @@
-const styles = {
+export default {
     day() {
         return {
             minScale: 1,
@@ -21,4 +21,3 @@ const styles = {
         }
     }
 };
-export default styles;

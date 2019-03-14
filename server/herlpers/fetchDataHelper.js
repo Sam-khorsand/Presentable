@@ -11,7 +11,13 @@ module.exports = Object.assign(Object.create(recordsHelper), {
                     headers: {
                         'Content-Type': 'application/json',
                     }
-                }).then(res => resolve(res.data.accessToken))
+                }).then(function(res) {
+                    resolve({
+                            ...newUser,
+                            accessToken: res.data.accessToken
+                        });    
+                    
+                })
                 .catch(err => reject(err));
         })
             
